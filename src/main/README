@@ -22,3 +22,11 @@ TODO:
 17 - Alterar endpoints de criação para .created ao invés de .ok
 
 18 - Calcular cpf via api externa
+
+-------------------
+
+- Validar OneToMany, ManyToOne, fetch, cascade
+
+- @Valid e @ControllerAdvice
+
+- Escrever um teste unitário simples com @WebMvcTest
