@@ -1,0 +1,24 @@
+TODO:
+
+
+3 - Criar endpoint de busca por status em /pedidos?status=...
+
+5 - Criar endpoint para atualizar status de um pedido
+
+8 - Calcular total do pedido no banco
+
+11 - Simular segurança com annotation customizada
+
+12 - Exportar pedidos em formato CSV
+
+13 - Documentação com Swagger
+
+14 - Dashboard simples: total de pedidos por status
+
+15 - Adicionar logs
+
+16 - Colocar cache com Redis no método de resgatar todos os produtos
+
+17 - Alterar endpoints de criação para .created ao invés de .ok
+
+18 - Calcular cpf via api externa
