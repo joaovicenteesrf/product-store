@@ -1,15 +1,13 @@
 package com.example.demo.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
@@ -17,17 +15,17 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@Table(name = "produto")
 public class Produto {
     @Id
     @GeneratedValue
     private Long id;
 
-    @NotNull
     private String nome;
 
-    @NotNull
-    @Min(0)
+    @DecimalMin("0.00")
     private BigDecimal valor;
 
     @Min(0)
