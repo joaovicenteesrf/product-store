@@ -5,6 +5,8 @@ import com.example.demo.entities.Produto;
 import com.example.demo.enums.DemoApiCodeEnum;
 import com.example.demo.exception.ApiException;
 import com.example.demo.repositories.ProdutoRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,9 +25,15 @@ public class ProdutoService {
 
     private static final Integer DEFAULT_QUANTITY = 1;
 
+    private static final Logger log = LoggerFactory.getLogger(ProdutoService.class);
+
+
     @CacheEvict(value = "products", allEntries = true)
     public Produto createProduct (ProdutoDTO produtoDTO) {
+        log.info("Iniciando criação do produto");
         if (produtoRepository.findByNome(produtoDTO.getNome()).isPresent()) {
+            log.debug("Produto encontrado: {}", produtoDTO);
+            log.info("Produto já cadastrado.");
             throw new ApiException(DemoApiCodeEnum.API_ERROR_EXISTENT_PRODUCT, "Produto já cadastrado. Tente novamente");
         }
 
