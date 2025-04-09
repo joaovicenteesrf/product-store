@@ -1,32 +1,85 @@
-TODO:
+@Entity utilizada para persistência
+@RestController para endpoints
+@Service para regra de negócio
+@Repository com JPA
+
+- Utilizar DTO's para receber e devolver respostas
+- Usar HATEOAS em chamadas de criação
 
 
-3 - Criar endpoint de busca por status em /pedidos?status=...
 
-5 - Criar endpoint para atualizar status de um pedido
+Clean code utilizado:
+- Nomes representativos e claros
+- Sem duplicações desnecessárias
+- Validações usando Bean Validation
+- Separação de responsabilidades
+- Erros tratados com Exceptions customizadas
+- Utilização do builder e outras anotações do Lombok
 
-8 - Calcular total do pedido no banco
 
-11 - Simular segurança com annotation customizada
+Design Pattern utilizado:
+- Builder: utilizado para instanciar entidades
 
-12 - Exportar pedidos em formato CSV
+- Factory Method: métodos createProduct, criarPedido encapsulam lógica de criação
 
-13 - Documentação com Swagger
+- Repository: interfaces JPA
 
-14 - Dashboard simples: total de pedidos por status
+- Service Layer: Camada intermediária entre controllers e repositórios
 
-15 - Adicionar logs
+- DTO Pattern: Separar os dados de entrada/saída
 
-16 - Colocar cache com Redis no método de resgatar todos os produtos
+- Proxy: Abstrair chamadas a Api's externas com Feign Client
 
-17 - Alterar endpoints de criação para .created ao invés de .ok
+- Cache Proxy: Reduzir acesso ao banco com Redis
 
-18 - Calcular cpf via api externa
 
--------------------
+SOLID:
 
-- Validar OneToMany, ManyToOne, fetch, cascade
+- S: Single Responsability: Serviços e DTO's têm responsabilidade única
 
-- @Valid e @ControllerAdvice
+- O: Open/Closed: Facilidade de extensão sem modificação
 
-- Escrever um teste unitário simples com @WebMvcTest
+- L: Liskov Substitution: Não tem heranças diretas, mas respeita o princípio na substituição de dependências
+
+- I: Interface Segregation: Separação adequada das responsabilidades dos repositórios
+
+- D: Dependency Inversion: Spring para injeção de dependências
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+Ordem do fluxo:
+
+- @RestController: Controller recebe uma DTO de Request
+    - Instancia Service com @Autowired
+    - Controller chama camada Service
+
+- @Service: Camada de serviço organiza as regras de negócio
+    - Instancia o Repository com @Autowired
+    - Implementa regras de negócio e tratamento personalizado de exceptions
+
+- @Repository: Camada que acessa o banco via JPA e Hibernate para realizar operações CRUD
+    - Realiza chamadas customizadas e chamadas padrão do JPA
+    - Define qual é a entidade que terá suas alterações realizadas
+
+- @Entity: Entidade mapeada para alguma tabela no banco
+    - Possui todas as anotações básicas do lombok: construtores, getters, setters, builder e @Table)
+    - Não deve ter validações nos campos. Isso é responsabilidade das DTO's.
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+Guias:
+
+Tratamento de exceptions personalizada:
+
+1- Configurar uma classe "GlobalExceptionHandler"
+    - Essa classe será anotada com @RestControllerAdvice
+    - Terá um método @ExceptionHandler para cada tipo de Exception
+
+2- Configurar uma classe de erro customizada que herda de RuntimeException
+    - definir um código que virá a partir de um enum
+    - mensagem a ser definida por string
+
+3- Em seguida,basta utilizar, lançando a exceção do passo 2.

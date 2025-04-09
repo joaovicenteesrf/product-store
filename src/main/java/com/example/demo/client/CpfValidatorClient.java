@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(url = "${external.cpf-validator.url", name = "apiPaymentClient")
 public interface CpfValidatorClient {
 
+    // Realiza chamadas externas para uma url configurada no application.yml
     @GetMapping(value = "/cpf/validate/{cpf}")
     CpfValidationResponse validateCpf(@PathVariable("cpf") String cpf);
 }
