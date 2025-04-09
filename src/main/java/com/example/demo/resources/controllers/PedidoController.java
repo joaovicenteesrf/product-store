@@ -21,8 +21,8 @@ public class PedidoController {
         return ResponseEntity.ok("Conexão com componente está ok!");
     }
 
-    @GetMapping(value = "/byId")
-    public ResponseEntity<EntityModel<Pedido>> getPedidoById(@RequestParam Long id) {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<EntityModel<Pedido>> getPedidoById(@PathVariable Long id) {
         var response = pedidoService.getPedidoById(id);
         return ResponseEntity.ok(EntityModel.of(response));
     }
@@ -31,8 +31,4 @@ public class PedidoController {
     public ResponseEntity<EntityModel<Pedido>> criarPedido(@RequestBody PedidoDTO pedidoDTO) {
        return ResponseEntity.ok(EntityModel.of(pedidoService.criarPedido(pedidoDTO)));
     }
-
-
-    // TODO: adicionar GET /pedidos/{id}
-    // TODO: adicionar GET /pedidos?status=...
 }
