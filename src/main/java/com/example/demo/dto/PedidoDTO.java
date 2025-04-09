@@ -1,20 +1,18 @@
 package com.example.demo.dto;
 
-import com.example.demo.entities.Cliente;
-import com.example.demo.entities.Produto;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import javax.validation.constraints.Email;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 public class PedidoDTO {
 
+    @Email(message = "Email é obrigatório.")
     private String clienteEmail;
 
     private List<CompraDTO> produtos;

@@ -9,7 +9,6 @@ import com.example.demo.enums.DemoApiCodeEnum;
 import com.example.demo.enums.StatusPedido;
 import com.example.demo.exception.ApiException;
 import com.example.demo.repositories.PedidoRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,11 +63,17 @@ public class PedidoService {
     private List<Produto> buildProductList(List<CompraDTO> produtos) {
         return produtos.stream()
                 .filter(produto -> produtoService.validateProduct(produto.getProductNome()))
-                .map(produto -> produtoService.getProductByName(produto.getProductNome()))
+                .map(produto -> {
+                    if (!produtoService.validateProduct(produto.getProductNome())) {
+                        throw new ApiException(DemoApiCodeEnum.API_ERROR_PRODUCT_DOESNT_EXIST, "Produto inexistente");
+                    }
+                    return produtoService.getProductByName(produto.getProductNome());
+                })
                 .collect(Collectors.toList());
     }
 
     public Pedido getPedidoById(Long id) {
-       return pedidoRepository.getById(id);
+       return pedidoRepository.findById(id)
+               .orElseThrow(() -> new ApiException(DemoApiCodeEnum.API_ERROR_PRODUCT_DOESNT_EXIST, "Produto inexistente"));
     }
 }
