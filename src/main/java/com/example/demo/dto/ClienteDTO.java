@@ -7,15 +7,19 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
 public class ClienteDTO {
 
-    @NotNull
+    @NotBlank(message = "Nome é obrigatório.")
     private String nome;
 
-    @NotNull
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message = "Formato de email inválido")
     private String email;
 }

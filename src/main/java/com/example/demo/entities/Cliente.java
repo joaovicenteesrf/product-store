@@ -2,9 +2,7 @@ package com.example.demo.entities;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 
 @Entity
@@ -13,13 +11,16 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @Builder
+@Table(name = "cliente")
 public class Cliente {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false)
     private String email;
 }

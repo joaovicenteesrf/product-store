@@ -22,8 +22,8 @@ public class ClienteController {
         return ResponseEntity.ok("Conexão com componente está ok!");
     }
 
-    @GetMapping(path = "/byId")
-    public ResponseEntity<Cliente> getClientById (@RequestParam Long id) {
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Cliente> getClientById (@PathVariable Long id) {
         return ResponseEntity.ok(clienteService.getClienteById(id));
     }
 
